@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d3i3s6y8gpux1"]
+
+[ext_resource type="PackedScene" uid="uid://bdrrd2d6ndqsk" path="res://Scenes/Player.tscn" id="1_3pc41"]
+[ext_resource type="PackedScene" uid="uid://dmmfo66qrupv7" path="res://Scenes/Map.tscn" id="2_w7qmd"]
+[ext_resource type="Script" uid="uid://ca0g15nqvnrtl" path="res://Scripts/camera_2d.gd" id="3_i1kgc"]
+
+[node name="OriGame" type="Node2D" unique_id=1537593370]
+
+[node name="Player" parent="." unique_id=1127191638 instance=ExtResource("1_3pc41")]
+position = Vector2(704, -288)
+
+[node name="Map" parent="." unique_id=1526308851 instance=ExtResource("2_w7qmd")]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=173370138]
+position = Vector2(576, -328)
+script = ExtResource("3_i1kgc")
