@@ -10,7 +10,7 @@ var negSpeedLimitX = -800
 var inAir = true
 
 # Dash variables
-var dashSpeed = 900.0
+var dashSpeed = 800.0
 var dashTime = 0.175
 var isDashing = false
 var dashTimer = 0.0

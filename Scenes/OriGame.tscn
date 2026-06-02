@@ -7,10 +7,12 @@
 [node name="OriGame" type="Node2D" unique_id=1537593370]
 
 [node name="Player" parent="." unique_id=1127191638 instance=ExtResource("1_3pc41")]
-position = Vector2(704, -288)
+unique_name_in_owner = true
+position = Vector2(655.65, -296)
 
 [node name="Map" parent="." unique_id=1526308851 instance=ExtResource("2_w7qmd")]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=173370138]
-position = Vector2(576, -328)
+position = Vector2(576, -320)
+zoom = Vector2(0.75, 0.75)
 script = ExtResource("3_i1kgc")
