@@ -91,6 +91,9 @@ func speedFallOff(delta):
 	else:
 		velocity.x -= deltaSpeedX / 1.05 * delta
 		
+func bash():
+	pass
+		
 func _physics_process(delta: float) -> void:
 	# Functionality of the speed limits in any direction
 	if velocity.x > speedLimitX:
@@ -142,3 +145,4 @@ func _physics_process(delta: float) -> void:
 	movement(delta)
 	speedFallOff(delta)
 	move_and_slide()
+	bash()
