@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var bashArea = $Area2D
+
 const SPEED = 400.0
 const JUMP_VELOCITY = -800.0
 var speedLimitY = 800
@@ -90,10 +92,32 @@ func speedFallOff(delta):
 		velocity.x -= deltaSpeedX * 5 * delta
 	else:
 		velocity.x -= deltaSpeedX / 1.05 * delta
-		
+
 func bash():
-	pass
+	if(Input.is_action_just_pressed("bash")):
+		var projectile = get_closest_projectile()
+		if projectile != null:
+			print(projectile)
+	
+func get_closest_projectile():
+	var closest = null
+	var closestDistance = INF
+	
+	var spaceState = get_world_2d().direct_space_state
+	for projectile in bashArea.get_overlapping_areas():
+		var query = PhysicsRayQueryParameters2D.create(global_position, projectile.global_position)
 		
+		query.exclude = [self]
+		query.collision_mask = 1 << 0
+		var wall_hit = spaceState.intersect_ray(query)
+		
+		if wall_hit.is_empty():
+			var distance = global_position.distance_squared_to(projectile.global_position)
+			if distance < closestDistance:
+				closestDistance = distance
+				closest = projectile
+	return closest
+	
 func _physics_process(delta: float) -> void:
 	# Functionality of the speed limits in any direction
 	if velocity.x > speedLimitX:

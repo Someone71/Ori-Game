@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://gl0m1ylaicax"]
 
-[ext_resource type="Script" uid="uid://c85sg5vltn5wr" path="res://Scripts/area_2d.gd" id="1_k1cl8"]
+[ext_resource type="Script" uid="uid://c85sg5vltn5wr" path="res://Scripts/projectileArea.gd" id="1_k1cl8"]
 [ext_resource type="Texture2D" uid="uid://bv4qta65djmof" path="res://icon.svg" id="2_y0kec"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tri7"]
 size = Vector2(32, 32)
 
-[node name="Area2D" type="Area2D" unique_id=121647500]
+[node name="Projectile" type="Area2D" unique_id=121647500]
+collision_layer = 8
+collision_mask = 3
 script = ExtResource("1_k1cl8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=501428267]
