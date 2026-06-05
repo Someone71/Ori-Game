@@ -4,8 +4,8 @@ extends CharacterBody2D
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -800.0
-var speedLimitY = 1000
-var negSpeedLimitY = -800
+var speedLimitY = 800
+var negSpeedLimitY = -1000
 var speedLimitX = 1000
 var negSpeedLimitX = -1000
 
@@ -56,7 +56,7 @@ func waveDash():
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		var direction := Input.get_axis("left", "right")
 		isWaveDashing = true
-		velocity.x = direction * dashSpeed * 2
+		velocity.x = direction * dashSpeed * 1.1
 		velocity.y = -500
 		
 func wallJump():
@@ -97,14 +97,17 @@ func speedFallOff(delta):
 		velocity.x -= deltaSpeedX / 1.05 * delta
 
 func bash():
-	velocity = velocity.length() * get_local_mouse_position().normalized() + (get_global_mouse_position() - global_position).normalized() * 400
+	var projectile = get_closest_projectile()
+	velocity += get_local_mouse_position().normalized() * 300 * projectile.mass
+	if velocity.dot(get_local_mouse_position()) < 0.5 or velocity.length() <= 400:
+		velocity = get_local_mouse_position().normalized() * 400 * projectile.mass
+	#velocity = velocity.length() * get_local_mouse_position().normalized() + (get_global_mouse_position() - global_position).normalized() * 400
+	#print(velocity)
 	velocity.y -= 200
 	bashCD = 1
 	dashCD = 0
 	
 func get_closest_projectile():
-	if(!bashArea.has_overlapping_areas()):
-		return null
 	var closest = null
 	var closestDistance = INF
 	
@@ -172,11 +175,11 @@ func _physics_process(delta: float) -> void:
 	if velocity.x != 0:
 		prevX = velocity.x
 		
-	if(Input.is_action_just_pressed("bash") and get_closest_projectile() != null and bashCD <= 0):
+	if(Input.is_action_just_pressed("bash") and bashArea.has_overlapping_areas() and bashCD <= 0):
 		bash()
 		
 	jump()
 	movement(delta)
 	speedFallOff(delta)
 	move_and_slide()
-	#print(velocity)
+	print(velocity)
