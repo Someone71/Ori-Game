@@ -4,10 +4,10 @@ extends CharacterBody2D
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -800.0
-var speedLimitY = 800
+var speedLimitY = 1000
 var negSpeedLimitY = -800
-var speedLimitX = 800
-var negSpeedLimitX = -800
+var speedLimitX = 1000
+var negSpeedLimitX = -1000
 
 var inAir = true
 
@@ -28,6 +28,9 @@ var prevX = 0
 # Coyote time amount
 var coyoteTime = 0.1
 var wallBounceCoyoteTime = 0.15
+
+#bash variables
+var bashCD = 0
 
 func dash():
 	dashDir = Input.get_vector("left", "right", "up", "down")
@@ -94,12 +97,14 @@ func speedFallOff(delta):
 		velocity.x -= deltaSpeedX / 1.05 * delta
 
 func bash():
-	if(Input.is_action_just_pressed("bash")):
-		var projectile = get_closest_projectile()
-		if projectile != null:
-			print(projectile)
+	velocity = velocity.length() * get_local_mouse_position().normalized() + (get_global_mouse_position() - global_position).normalized() * 400
+	velocity.y -= 200
+	bashCD = 1
+	dashCD = 0
 	
 func get_closest_projectile():
+	if(!bashArea.has_overlapping_areas()):
+		return null
 	var closest = null
 	var closestDistance = INF
 	
@@ -131,7 +136,7 @@ func _physics_process(delta: float) -> void:
 		
 		# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity()*1.25 * delta*2
+		velocity += get_gravity() * 1.2 * delta*2
 		coyoteTime -= delta
 	
 	if is_on_floor():
@@ -141,8 +146,9 @@ func _physics_process(delta: float) -> void:
 	if not is_on_wall_only():
 		wallBounceCoyoteTime -= delta
 
-	# Handle dash and the wallBounce timer
+	# Handle dash, bash and the wallBounce timer
 	dashCD -= delta
+	bashCD -= delta
 	wallBounceSpeedTimer -= delta
 	if Input.is_action_just_pressed("dash") and not isDashing and dashCD <= 0:
 		dash()
@@ -155,6 +161,7 @@ func _physics_process(delta: float) -> void:
 		wallJump()
 	if is_on_floor():
 		dashCD = 0
+		bashCD = 0
 	dashTimer -= delta
 	if dashTimer <= 0:
 		isDashing = false
@@ -165,8 +172,11 @@ func _physics_process(delta: float) -> void:
 	if velocity.x != 0:
 		prevX = velocity.x
 		
+	if(Input.is_action_just_pressed("bash") and get_closest_projectile() != null and bashCD <= 0):
+		bash()
+		
 	jump()
 	movement(delta)
 	speedFallOff(delta)
 	move_and_slide()
-	bash()
+	#print(velocity)

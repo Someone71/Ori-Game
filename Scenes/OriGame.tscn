@@ -9,7 +9,7 @@
 
 [node name="Player" parent="." unique_id=1127191638 instance=ExtResource("1_3pc41")]
 unique_name_in_owner = true
-position = Vector2(672, -304)
+position = Vector2(928, -456)
 
 [node name="Map" parent="." unique_id=1526308851 instance=ExtResource("2_w7qmd")]
 
@@ -19,4 +19,7 @@ zoom = Vector2(0.75, 0.75)
 script = ExtResource("3_i1kgc")
 
 [node name="Projectile" parent="." unique_id=121647500 instance=ExtResource("4_og7hn")]
-position = Vector2(112, -328)
+position = Vector2(1584, -400)
+
+[node name="Projectile2" parent="." unique_id=1327722775 instance=ExtResource("4_og7hn")]
+position = Vector2(1584, -512)
