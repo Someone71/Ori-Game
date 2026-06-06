@@ -5,9 +5,9 @@ extends CharacterBody2D
 const SPEED = 400.0
 const JUMP_VELOCITY = -800.0
 var speedLimitY = 800
-var negSpeedLimitY = -1000
-var speedLimitX = 1000
-var negSpeedLimitX = -1000
+var negSpeedLimitY = -1500
+var speedLimitX = 1500
+var negSpeedLimitX = -1500
 
 var inAir = true
 
@@ -30,7 +30,10 @@ var coyoteTime = 0.1
 var wallBounceCoyoteTime = 0.15
 
 #bash variables
+var closestProjectile
 var bashCD = 0
+var isBashing = false
+var bashTimer = 0
 
 func dash():
 	dashDir = Input.get_vector("left", "right", "up", "down")
@@ -38,7 +41,7 @@ func dash():
 	isDashing = true
 	dashCD = 1
 	dashTimer = dashTime
-	velocity = dashDir * dashSpeed * 0.75	
+	velocity = dashDir * dashSpeed * 0.7	
 	if Input.is_action_pressed("up"):
 		velocity.y -= 200
 		
@@ -97,16 +100,22 @@ func speedFallOff(delta):
 		velocity.x -= deltaSpeedX / 1.05 * delta
 
 func bash():
-	var projectile = get_closest_projectile()
-	velocity += get_local_mouse_position().normalized() * 300 * projectile.mass
-	if velocity.dot(get_local_mouse_position()) < 0.5 or velocity.length() <= 400:
-		velocity = get_local_mouse_position().normalized() * 400 * projectile.mass
-	#velocity = velocity.length() * get_local_mouse_position().normalized() + (get_global_mouse_position() - global_position).normalized() * 400
-	#print(velocity)
-	velocity.y -= 200
-	bashCD = 1
-	dashCD = 0
+	if(isBashing):
+		if bashTimer <= 0 or Input.is_action_just_released("bash"):
+			velocity = get_local_mouse_position().normalized() * 600 * closestProjectile.mass 
+			closestProjectile.rotation = (get_local_mouse_position() * -1).angle()
 	
+			velocity.y -= 200
+			bashCD = 1
+			dashCD = 0
+			isBashing = false
+			Engine.time_scale = 1
+	else:
+		isBashing = true
+		bashTimer = 0.1
+		Engine.time_scale = 0.2
+		velocity = Vector2.ZERO
+
 func get_closest_projectile():
 	var closest = null
 	var closestDistance = INF
@@ -138,7 +147,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = negSpeedLimitY
 		
 		# Add the gravity.
-	if not is_on_floor():
+	if not is_on_floor() and not isBashing:
 		velocity += get_gravity() * 1.2 * delta*2
 		coyoteTime -= delta
 	
@@ -175,11 +184,18 @@ func _physics_process(delta: float) -> void:
 	if velocity.x != 0:
 		prevX = velocity.x
 		
-	if(Input.is_action_just_pressed("bash") and bashArea.has_overlapping_areas() and bashCD <= 0):
-		bash()
+	if(Input.is_action_just_pressed("bash") and bashArea.has_overlapping_areas() and bashCD <= 0) or isBashing:
+		if not isBashing:
+			closestProjectile = get_closest_projectile()
+		else: 
+			position.x = move_toward(position.x, closestProjectile.position.x, delta*100)
+			position.y = move_toward(position.y, closestProjectile.position.y, delta*100)
+			bashTimer -= delta
+		if closestProjectile != null:
+			bash()
 		
 	jump()
 	movement(delta)
 	speedFallOff(delta)
 	move_and_slide()
-	print(velocity)
+	#print(velocity)
