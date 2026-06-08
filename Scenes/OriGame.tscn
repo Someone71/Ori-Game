@@ -20,6 +20,8 @@ script = ExtResource("3_i1kgc")
 
 [node name="Projectile" parent="." unique_id=121647500 instance=ExtResource("4_og7hn")]
 position = Vector2(1336, -344)
+mass = 3.0
 
 [node name="Projectile2" parent="." unique_id=1327722775 instance=ExtResource("4_og7hn")]
 position = Vector2(1512, -320)
+mass = 1.5
