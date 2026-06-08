@@ -199,3 +199,12 @@ func _physics_process(delta: float) -> void:
 	speedFallOff(delta)
 	move_and_slide()
 	#print(velocity)
+	
+	
+	# make projectile
+	if(Input.is_action_just_pressed("spiritFlame")):
+		var projectile = Projectile.instanciate()
+		var direction = (get_global_mouse_position() - global_position).normalized()
+		projectile.position = global_position
+		projectile.setup(direction)
+		get_tree().current_scene.add_child(projectile)
