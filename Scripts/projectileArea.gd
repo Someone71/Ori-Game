@@ -5,6 +5,6 @@ extends Area2D
 var direction : Vector2
 
 func _physics_process(delta: float) -> void:
-	pass
-	#direction = Vector2.RIGHT.rotated(rotation)
-	#global_position += direction * speed * delta
+	#pass
+	direction = Vector2.RIGHT.rotated(rotation)
+	global_position += direction * speed * delta
