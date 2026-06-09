@@ -52,7 +52,7 @@ func movement(delta):
 			velocity.x += direction * 1200 * delta
 		
 func jump():
-	if Input.is_action_just_pressed("jump") and not isDashing and (is_on_floor() or coyoteTime > 0 and not isBashing):
+	if Input.is_action_just_pressed("jump") and not isDashing and (is_on_floor() or coyoteTime > 0):
 		velocity.y = JUMP_VELOCITY
 		
 func waveDash():
@@ -104,7 +104,6 @@ func bash():
 		if bashTimer <= 0 or Input.is_action_just_released("bash"):
 			velocity = get_local_mouse_position().normalized() * 600 * closestProjectile.mass 
 			closestProjectile.rotation = (get_local_mouse_position() * -1).angle()
-			closestProjectile.speed = 600 / closestProjectile.mass
 	
 			velocity.y -= 200
 			bashCD = 1
@@ -113,7 +112,6 @@ func bash():
 			Engine.time_scale = 1
 	else:
 		isBashing = true
-		closestProjectile.speed = 0
 		bashTimer = 0.1
 		Engine.time_scale = 0.2
 		velocity = Vector2.ZERO
@@ -205,7 +203,7 @@ func _physics_process(delta: float) -> void:
 	
 	# make projectile
 	if(Input.is_action_just_pressed("spiritFlame")):
-		var projectile = Projectile.instanciate()
+		var projectile = projectile.instanciate()
 		var direction = (get_global_mouse_position() - global_position).normalized()
 		projectile.position = global_position
 		projectile.setup(direction)
