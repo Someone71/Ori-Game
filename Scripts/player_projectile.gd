@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var speed : int = 200
-@export var mass = 1
+@export var mass = 1.0
 var velocity: Vector2 = Vector2.ZERO
 
 func setup(dir: Vector2) -> void:

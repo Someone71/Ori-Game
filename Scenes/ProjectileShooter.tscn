@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bv4qta65djmof" path="res://icon.svg" id="2_w74c4"]
 
 [node name="ProjectileShooter" type="Node2D" unique_id=537314386]
+z_index = 1
 script = ExtResource("1_7a6th")
+projectileMass = 1.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=440895800]
 texture = ExtResource("2_w74c4")

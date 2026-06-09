@@ -105,6 +105,7 @@ func bash():
 		if bashTimer <= 0 or Input.is_action_just_released("bash"):
 			velocity = get_local_mouse_position().normalized() * 600 * closestProjectile.mass 
 			closestProjectile.rotation = (get_local_mouse_position() * -1).angle()
+			closestProjectile.speed /= closestProjectile.mass / 2
 	
 			velocity.y -= 200
 			bashCD = 1
