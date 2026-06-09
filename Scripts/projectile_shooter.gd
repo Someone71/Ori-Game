@@ -2,12 +2,17 @@ extends Node2D
 
 @onready var main = get_tree().get_root().get_node("OriGame")
 @onready var projectile = load("res://Scenes/MapProjectile.tscn")
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+
+var shootingCD = 3
+
+func _physics_process(delta: float) -> void:
+	shootingCD -= delta
+	if shootingCD <= 0:
+		shootingCD = 3
+		shoot()
 
 func shoot():
 	var instance = projectile.instantiate()
-	instance.dir = rotation
-	instance.spawnPos = global_position
-	main.add_child.call_deffered(instance)
+	instance.rotation = rotation
+	instance.startingPosition = global_position
+	get_tree().current_scene.add_child(instance)
