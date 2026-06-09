@@ -9,4 +9,6 @@ func setup(dir: Vector2) -> void:
 	rotation = dir.angle()
 
 func _physics_process(delta: float) -> void:
-	position += velocity * delta
+	#pass
+	direction = Vector2.RIGHT.rotated(rotation)
+	global_position += direction * speed * delta
