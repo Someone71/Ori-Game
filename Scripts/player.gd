@@ -1,6 +1,7 @@
 extends CharacterBody2D
-
+ 
 @onready var bashArea = $Area2D
+@onready var playerProjectile = load("res://Scenes/PlayerProjectile.tscn")
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -800.0
@@ -121,18 +122,18 @@ func get_closest_projectile():
 	var closestDistance = INF
 	
 	var spaceState = get_world_2d().direct_space_state
-	for projectile in bashArea.get_overlapping_areas():
-		var query = PhysicsRayQueryParameters2D.create(global_position, projectile.global_position)
+	for projectiles in bashArea.get_overlapping_areas():
+		var query = PhysicsRayQueryParameters2D.create(global_position, projectiles.global_position)
 		
 		query.exclude = [self]
 		query.collision_mask = 1 << 0
 		var wall_hit = spaceState.intersect_ray(query)
 		
 		if wall_hit.is_empty():
-			var distance = global_position.distance_squared_to(projectile.global_position)
+			var distance = global_position.distance_squared_to(projectiles.global_position)
 			if distance < closestDistance:
 				closestDistance = distance
-				closest = projectile
+				closest = projectiles
 	return closest
 	
 func _physics_process(delta: float) -> void:
@@ -203,7 +204,7 @@ func _physics_process(delta: float) -> void:
 	
 	# make projectile
 	if(Input.is_action_just_pressed("spiritFlame")):
-		var projectile = projectile.instanciate()
+		var projectile = playerProjectile.instantiate()
 		var direction = (get_global_mouse_position() - global_position).normalized()
 		projectile.position = global_position
 		projectile.setup(direction)
