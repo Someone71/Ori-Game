@@ -107,6 +107,7 @@ func bash():
 			closestProjectile.rotation = (get_local_mouse_position() * -1).angle()
 			closestProjectile.speed /= closestProjectile.mass / 2
 	
+			get_node("BashArrow").visible = false
 			velocity.y -= 200
 			bashCD = 1
 			dashCD = 0
@@ -114,9 +115,11 @@ func bash():
 			Engine.time_scale = 1
 	else:
 		isBashing = true
+		get_node("BashArrow").visible = true
 		bashTimer = 0.1
 		Engine.time_scale = 0.2
 		velocity = Vector2.ZERO
+		
 
 func get_closest_projectile():
 	var closest = null
@@ -192,6 +195,7 @@ func _physics_process(delta: float) -> void:
 		else: 
 			position.x = move_toward(position.x, closestProjectile.position.x, delta*100)
 			position.y = move_toward(position.y, closestProjectile.position.y, delta*100)
+			get_node("BashArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.5
 			bashTimer -= delta
 		if closestProjectile != null:
 			bash()
