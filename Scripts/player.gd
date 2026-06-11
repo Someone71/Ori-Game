@@ -195,7 +195,7 @@ func _physics_process(delta: float) -> void:
 		else: 
 			position.x = move_toward(position.x, closestProjectile.position.x, delta*100)
 			position.y = move_toward(position.y, closestProjectile.position.y, delta*100)
-			get_node("BashArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.5
+			get_node("BashArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.57
 			bashTimer -= delta
 		if closestProjectile != null:
 			bash()
