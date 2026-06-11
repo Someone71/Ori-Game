@@ -25,5 +25,3 @@ rotation = -0.07853982
 
 [node name="MapProjectile" parent="." unique_id=121647500 instance=ExtResource("4_og7hn")]
 position = Vector2(200, -88)
-speed = 200
-mass = 1.0

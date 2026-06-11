@@ -2,6 +2,7 @@ extends CharacterBody2D
  
 @onready var bashArea = $Area2D
 @onready var playerProjectile = load("res://Scenes/PlayerProjectile.tscn")
+@onready var tag_cooldown_timer = 50
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -800.0
@@ -141,6 +142,7 @@ func get_closest_projectile():
 	return closest
 	
 func _physics_process(delta: float) -> void:
+	tag_cooldown_timer -= 0.1 
 	# Functionality of the speed limits in any direction
 	if velocity.x > speedLimitX:
 		velocity.x = speedLimitX
@@ -208,9 +210,14 @@ func _physics_process(delta: float) -> void:
 	
 	
 	# make projectile
-	if(Input.is_action_just_pressed("spiritFlame")):
+	if(Input.is_action_just_pressed("spiritFlame") && tag_cooldown_timer > 0):
 		var projectile = playerProjectile.instantiate()
 		var direction = (get_global_mouse_position() - global_position).normalized()
 		projectile.position = global_position
 		projectile.setup(direction)
 		get_tree().current_scene.add_child(projectile)
+		
+		tag_cooldown_timer = max(tag_cooldown_timer + delta, 0)
+		if (tag_cooldown_timer == 0):
+			tag_cooldown_timer = 50
+		
