@@ -4,7 +4,7 @@ extends CharacterBody2D
 @onready var playerProjectile = load("res://Scenes/PlayerProjectile.tscn")
 
 var cooldown_timer = 0
-var arrow_timer = 5
+var spiritFlameTimer = 0
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -800.0
@@ -214,18 +214,17 @@ func _physics_process(delta: float) -> void:
 	
 	# make projectile
 	if(Input.is_action_just_pressed("spiritFlame") && cooldown_timer < 0 ):
-		get_node("PointyArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.57
 		var projectile = playerProjectile.instantiate()
 		var direction = (get_global_mouse_position() - global_position).normalized()
 		projectile.position = global_position
 		projectile.setup(direction)
 		get_tree().current_scene.add_child(projectile)
-		
 		cooldown_timer = 1
-		
-	if(Input.is_action_just_pressed("spiritFlame")):
+
+	if(Input.is_action_pressed("spiritFlame") and spiritFlameTimer<3):
 		get_node("PointyArrow").visible = true
-		arrow_timer -= delta
-	
-	if(not Input.is_action_just_pressed("spiritFlame") and arrow_timer <= 0):
-		get_node("PointyArrow").visible = false
+		get_node("PointyArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.57
+		spiritFlameTimer += delta
+	if (not Input.is_action_pressed("spiritFlame") or spiritFlameTimer >3):
+			get_node("PointyArrow").visible = false
+			spiritFlameTimer = 0
