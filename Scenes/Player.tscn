@@ -33,7 +33,7 @@ shape = SubResource("CircleShape2D_dewec")
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_5ixxa")
 
-[node name="BashArrow" type="Sprite2D" parent="." unique_id=403162267]
+[node name="PointyArrow" type="Sprite2D" parent="." unique_id=403162267]
 visible = false
 texture_filter = 1
 texture = ExtResource("3_gntrk")

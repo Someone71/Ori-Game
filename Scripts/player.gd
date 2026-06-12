@@ -3,7 +3,8 @@ extends CharacterBody2D
 @onready var bashArea = $Area2D
 @onready var playerProjectile = load("res://Scenes/PlayerProjectile.tscn")
 
-var cooldown_timer = 3
+var cooldown_timer = 0
+var arrow_timer = 5
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -800.0
@@ -198,11 +199,12 @@ func _physics_process(delta: float) -> void:
 		else: 
 			position.x = move_toward(position.x, closestProjectile.position.x, delta*100)
 			position.y = move_toward(position.y, closestProjectile.position.y, delta*100)
-			get_node("BashArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.57
+			get_node("PointyArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.57
 			bashTimer -= delta
 		if closestProjectile != null:
 			bash()
-		
+	
+	
 	jump()
 	movement(delta)
 	speedFallOff(delta)
@@ -212,11 +214,18 @@ func _physics_process(delta: float) -> void:
 	
 	# make projectile
 	if(Input.is_action_just_pressed("spiritFlame") && cooldown_timer < 0 ):
+		get_node("PointyArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.57
 		var projectile = playerProjectile.instantiate()
 		var direction = (get_global_mouse_position() - global_position).normalized()
 		projectile.position = global_position
 		projectile.setup(direction)
 		get_tree().current_scene.add_child(projectile)
 		
-		cooldown_timer = 3
+		cooldown_timer = 1
 		
+	if(Input.is_action_just_pressed("spiritFlame")):
+		get_node("PointyArrow").visible = true
+		arrow_timer -= delta
+	
+	if(not Input.is_action_just_pressed("spiritFlame") and arrow_timer <= 0):
+		get_node("PointyArrow").visible = false
