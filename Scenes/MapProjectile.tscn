@@ -1,22 +1,23 @@
 [gd_scene format=3 uid="uid://gl0m1ylaicax"]
 
 [ext_resource type="Script" uid="uid://c85sg5vltn5wr" path="res://Scripts/mapProjectile.gd" id="1_k1cl8"]
-[ext_resource type="Texture2D" uid="uid://bv4qta65djmof" path="res://icon.svg" id="2_y0kec"]
+[ext_resource type="Texture2D" uid="uid://d3vth32ui8cth" path="res://Assets/Sprites/spritesheet.png" id="2_1pax3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tri7"]
-size = Vector2(32, 32)
+size = Vector2(56, 24)
 
 [node name="MapProjectile" type="Area2D" unique_id=121647500]
 collision_layer = 8
 collision_mask = 3
 script = ExtResource("1_k1cl8")
-speed = null
-mass = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=501428267]
 shape = SubResource("RectangleShape2D_0tri7")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=360095702]
-position = Vector2(-3.5762787e-07, -3.5762787e-07)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_y0kec")
+texture_filter = 1
+position = Vector2(1.9073486e-06, -4.7683716e-07)
+scale = Vector2(0.9655172, 2)
+texture = ExtResource("2_1pax3")
+region_enabled = true
+region_rect = Rect2(64, 11, 58, 12)

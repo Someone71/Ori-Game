@@ -111,7 +111,7 @@ func bash():
 	
 			get_node("BashArrow").visible = false
 			velocity.y -= 200
-			bashCD = 1
+			bashCD = 3
 			dashCD = 0
 			isBashing = false
 			Engine.time_scale = 1
