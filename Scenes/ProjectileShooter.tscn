@@ -1,12 +1,65 @@
 [gd_scene format=3 uid="uid://bm0fmt8wxnbha"]
 
 [ext_resource type="Script" uid="uid://dodt1yegt6qx5" path="res://Scripts/projectile_shooter.gd" id="1_7a6th"]
-[ext_resource type="Texture2D" uid="uid://bv4qta65djmof" path="res://icon.svg" id="2_w74c4"]
+[ext_resource type="Texture2D" uid="uid://bafkkfmk86168" path="res://Assets/Sprites/Dimensional_Portal.png" id="2_w74c4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxmiu"]
+atlas = ExtResource("2_w74c4")
+region = Rect2(8, 1, 18, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vh0o"]
+atlas = ExtResource("2_w74c4")
+region = Rect2(40, 1, 18, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ved57"]
+atlas = ExtResource("2_w74c4")
+region = Rect2(72, 1, 18, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ncvyn"]
+atlas = ExtResource("2_w74c4")
+region = Rect2(8, 33, 18, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20e5i"]
+atlas = ExtResource("2_w74c4")
+region = Rect2(40, 33, 18, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7p7c3"]
+atlas = ExtResource("2_w74c4")
+region = Rect2(72, 33, 18, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m4vis"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxmiu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vh0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ved57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ncvyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20e5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7p7c3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="ProjectileShooter" type="Node2D" unique_id=537314386]
 z_index = 1
 script = ExtResource("1_7a6th")
-projectileMass = 1.5
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=440895800]
-texture = ExtResource("2_w74c4")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1997285826]
+texture_filter = 1
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_m4vis")
+autoplay = "default"
+frame_progress = 0.889042

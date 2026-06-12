@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://dmmfo66qrupv7" path="res://Scenes/Map.tscn" id="2_w7qmd"]
 [ext_resource type="Script" uid="uid://ca0g15nqvnrtl" path="res://Scripts/camera.gd" id="3_i1kgc"]
 [ext_resource type="PackedScene" uid="uid://bm0fmt8wxnbha" path="res://Scenes/ProjectileShooter.tscn" id="4_k078d"]
-[ext_resource type="PackedScene" uid="uid://gl0m1ylaicax" path="res://Scenes/MapProjectile.tscn" id="4_og7hn"]
 
 [node name="OriGame" type="Node2D" unique_id=1537593370]
 
@@ -20,8 +19,7 @@ zoom = Vector2(0.75, 0.75)
 script = ExtResource("3_i1kgc")
 
 [node name="ProjectileShooter" parent="." unique_id=537314386 instance=ExtResource("4_k078d")]
-position = Vector2(152, -264)
-rotation = -0.07853982
+position = Vector2(288, -408)
 
-[node name="MapProjectile" parent="." unique_id=121647500 instance=ExtResource("4_og7hn")]
-position = Vector2(200, -88)
+[node name="ProjectileShooter2" parent="." unique_id=1273988166 instance=ExtResource("4_k078d")]
+position = Vector2(320, -544)

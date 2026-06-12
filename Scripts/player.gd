@@ -18,7 +18,7 @@ var inAir = true
 # Dash variables
 var dashSpeed = 800.0
 var dashTime = 0.175
-var isDashing = false
+@export var isDashing = false
 var dashTimer = 0.0
 var dashDir = Vector2.ZERO
 var dashCD = 0.0
@@ -90,35 +90,33 @@ func wallBounce():
 		elif Input.is_action_pressed("right"):
 			dashOffVal = -300
 	if Input.is_action_pressed("up") and Input.is_action_just_pressed("jump") and (is_on_wall_only() or wallBounceCoyoteTime > 0):
-		negSpeedLimitY = -1050
-		velocity.y -= dashSpeed * 0.75
+		velocity.y -= dashSpeed * 0.72
 		velocity.x = dashOffVal
 		
 func speedFallOff(delta):
 	var deltaSpeedX = velocity.x
 	if is_on_floor():
-		velocity.x -= deltaSpeedX * 3 * delta
+		velocity.x -= deltaSpeedX * 4 * delta
 	elif velocity.x < 200 and velocity.x > -200 and is_on_floor():
-		velocity.x -= deltaSpeedX * 5 * delta
+		velocity.x -= deltaSpeedX * 6 * delta
 	else:
 		velocity.x -= deltaSpeedX / 1.05 * delta
 
 func bash():
 	if(isBashing):
 		if bashTimer <= 0 or Input.is_action_just_released("bash"):
-			velocity = get_local_mouse_position().normalized() * 600 * closestProjectile.mass 
-			closestProjectile.rotation = (get_local_mouse_position() * -1).angle()
-			closestProjectile.speed /= closestProjectile.mass / 2
+			velocity = get_local_mouse_position().normalized() * 800 * closestProjectile.mass 
+			closestProjectile.velocity = closestProjectile.velocity.length() * (get_local_mouse_position() * -1).normalized() / closestProjectile.mass
 	
-			get_node("BashArrow").visible = false
-			velocity.y -= 200
+			get_node("PointyArrow").visible = false
+			velocity.y -= 200 / closestProjectile.mass
 			bashCD = 3
 			dashCD = 0
 			isBashing = false
 			Engine.time_scale = 1
 	else:
 		isBashing = true
-		get_node("BashArrow").visible = true
+		get_node("PointyArrow").visible = true
 		bashTimer = 0.1
 		Engine.time_scale = 0.2
 		velocity = Vector2.ZERO
@@ -129,7 +127,7 @@ func get_closest_projectile():
 	var closestDistance = INF
 	
 	var spaceState = get_world_2d().direct_space_state
-	for projectiles in bashArea.get_overlapping_areas():
+	for projectiles in bashArea.get_overlapping_bodies():
 		var query = PhysicsRayQueryParameters2D.create(global_position, projectiles.global_position)
 		
 		query.exclude = [self]
@@ -188,12 +186,10 @@ func _physics_process(delta: float) -> void:
 		isDashing = false
 	
 	# Allows wallbounces to be higher than a typical wall jump
-	if wallBounceSpeedTimer <= 0:
-		negSpeedLimitY = -800
 	if velocity.x != 0:
 		prevX = velocity.x
 		
-	if(Input.is_action_just_pressed("bash") and bashArea.has_overlapping_areas() and bashCD <= 0) or isBashing:
+	if(Input.is_action_just_pressed("bash") and bashArea.has_overlapping_bodies() and bashCD <= 0) or isBashing:
 		if not isBashing:
 			closestProjectile = get_closest_projectile()
 		else: 
@@ -208,22 +204,21 @@ func _physics_process(delta: float) -> void:
 	movement(delta)
 	speedFallOff(delta)
 	move_and_slide()
-	#print(velocity)
+	#print(velocity.y)
 	
 	
 	# make projectile
 	if(Input.is_action_just_released("spiritFlame") && cooldown_timer < 0 ):
 		var projectile = playerProjectile.instantiate()
-		var direction = (get_global_mouse_position() - global_position).normalized()
+		projectile.velocity = 500 * get_local_mouse_position().normalized()
 		projectile.position = global_position
-		projectile.setup(direction)
 		get_tree().current_scene.add_child(projectile)
 		cooldown_timer = 1
-	if(Input.is_action_pressed("spiritFlame") and spiritFlameTimer<3):
+	if(Input.is_action_pressed("spiritFlame") and spiritFlameTimer<3) or isBashing:
 		get_node("PointyArrow").visible = true
 		get_node("PointyArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.57
 		spiritFlameTimer += delta
-	if (not Input.is_action_pressed("spiritFlame") or spiritFlameTimer >3):
+	if (not Input.is_action_pressed("spiritFlame") or spiritFlameTimer >3 and not isBashing):
 			get_node("PointyArrow").visible = false
 			spiritFlameTimer = 0
 	

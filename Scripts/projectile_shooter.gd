@@ -4,7 +4,7 @@ extends Node2D
 @onready var projectile = load("res://Scenes/MapProjectile.tscn")
 
 @export var projectileSpeed = 200
-@export var projectileMass = 1.0
+@export var projectileMass = 1
 
 var shootingCD = 3
 
@@ -16,8 +16,7 @@ func _physics_process(delta: float) -> void:
 
 func shoot():
 	var instance = projectile.instantiate()
-	instance.rotation = rotation
+	instance.velocity = Vector2.from_angle(rotation) * projectileSpeed
 	instance.position = global_position
-	instance.speed = projectileSpeed
 	instance.mass = projectileMass
 	main.add_child.call_deferred(instance)
