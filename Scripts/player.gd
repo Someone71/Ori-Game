@@ -214,11 +214,12 @@ func _physics_process(delta: float) -> void:
 		projectile.position = global_position
 		get_tree().current_scene.add_child(projectile)
 		cooldown_timer = 1
+		
 	if(Input.is_action_pressed("spiritFlame") and spiritFlameTimer<3) or isBashing:
 		get_node("PointyArrow").visible = true
 		get_node("PointyArrow").rotation = (get_local_mouse_position() * -1).angle() - 1.57
 		spiritFlameTimer += delta
-	if (not Input.is_action_pressed("spiritFlame") or spiritFlameTimer >3 and not isBashing):
+	if ((not Input.is_action_pressed("spiritFlame") or spiritFlameTimer > 3) and not isBashing):
 			get_node("PointyArrow").visible = false
 			spiritFlameTimer = 0
 	
