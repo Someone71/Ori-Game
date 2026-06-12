@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cqeon1ovgvsxc" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://86x600h4mu2p" path="res://Assets/Sprites/definitelyacyclopsboy.png" id="2_gntrk"]
 [ext_resource type="Texture2D" uid="uid://bcstcaj6b07yt" path="res://Assets/Sprites/bullets_fullsheet.png" id="3_gntrk"]
+[ext_resource type="Script" uid="uid://6gfmqwj1a3j5" path="res://Scenes/game_time_label.gd" id="4_dewec"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dewec"]
 radius = 96.0
@@ -41,3 +42,12 @@ offset = Vector2(0, -80)
 region_enabled = true
 region_rect = Rect2(0, 30, 20, 30)
 region_filter_clip_enabled = true
+
+[node name="GameTimeLabel" type="Label" parent="." unique_id=1129630837]
+offset_left = -32.0
+offset_top = -80.0
+offset_right = 32.0
+offset_bottom = -32.0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_dewec")
