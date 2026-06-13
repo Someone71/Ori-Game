@@ -12,6 +12,7 @@ unique_name_in_owner = true
 position = Vector2(102, -99)
 
 [node name="Map" parent="." unique_id=1526308851 instance=ExtResource("2_w7qmd")]
+position = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=173370138]
 position = Vector2(576, -320)
@@ -20,6 +21,7 @@ script = ExtResource("3_i1kgc")
 
 [node name="ProjectileShooter" parent="." unique_id=537314386 instance=ExtResource("4_k078d")]
 position = Vector2(76, -527)
+projectileMass = 3
 
 [node name="ProjectileShooter2" parent="." unique_id=1273988166 instance=ExtResource("4_k078d")]
 position = Vector2(501, -1480)
