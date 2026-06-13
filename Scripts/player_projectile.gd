@@ -18,7 +18,7 @@ func _ready() -> void:
 	mass = 1.0
 		
 func _physics_process(delta: float) -> void:
-	velocity += get_gravity() / 80
+	velocity += get_gravity() / 120
 	var collision = move_and_collide(velocity * delta)
 	rotation = velocity.angle()
 	

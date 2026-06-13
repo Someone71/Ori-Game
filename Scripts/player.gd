@@ -106,7 +106,7 @@ func bash():
 	if(isBashing):
 		if bashTimer <= 0 or Input.is_action_just_released("bash"):
 			velocity = get_local_mouse_position().normalized() * 800 * closestProjectile.mass 
-			closestProjectile.velocity = closestProjectile.velocity.length() * (get_local_mouse_position() * -1).normalized() / closestProjectile.mass
+			closestProjectile.velocity = closestProjectile.velocity.length() * (get_local_mouse_position() * -1).normalized()
 	
 			get_node("PointyArrow").visible = false
 			velocity.y -= 200 / closestProjectile.mass
@@ -213,7 +213,7 @@ func _physics_process(delta: float) -> void:
 		projectile.velocity = 500 * get_local_mouse_position().normalized()
 		projectile.position = global_position
 		get_tree().current_scene.add_child(projectile)
-		cooldown_timer = 1
+		cooldown_timer = 3
 		
 	if(Input.is_action_pressed("spiritFlame") and spiritFlameTimer<3) or isBashing:
 		get_node("PointyArrow").visible = true
