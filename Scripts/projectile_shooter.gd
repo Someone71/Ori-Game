@@ -5,13 +5,14 @@ extends Node2D
 
 @export var projectileSpeed = 200
 @export var projectileMass = 1
+@export var shootingCD = 3
 
-var shootingCD = 3
+var shootingTimer = shootingCD
 
 func _physics_process(delta: float) -> void:
-	shootingCD -= delta
-	if shootingCD <= 0:
-		shootingCD = 3
+	shootingTimer -= delta
+	if shootingTimer <= 0:
+		shootingTimer = shootingCD
 		shoot()
 
 func shoot():
