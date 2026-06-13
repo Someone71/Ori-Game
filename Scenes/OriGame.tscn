@@ -20,16 +20,25 @@ zoom = Vector2(0.75, 0.75)
 script = ExtResource("3_i1kgc")
 
 [node name="ProjectileShooter" parent="." unique_id=537314386 instance=ExtResource("4_k078d")]
-position = Vector2(76, -527)
+position = Vector2(177, -833)
 projectileMass = 3
 
 [node name="ProjectileShooter2" parent="." unique_id=1273988166 instance=ExtResource("4_k078d")]
-position = Vector2(501, -1480)
+position = Vector2(825, -2096)
 rotation = 1.5600858
 
 [node name="ProjectileShooter3" parent="." unique_id=1086225888 instance=ExtResource("4_k078d")]
-position = Vector2(605, -1053)
-rotation = -2.4225013
+position = Vector2(1582, -1199)
+rotation = -6.3174224
+shootingCD = 5
 
 [node name="ProjectileShooter4" parent="." unique_id=358698595 instance=ExtResource("4_k078d")]
-position = Vector2(63, -1031)
+position = Vector2(1348, -128)
+rotation = -1.5965981
+projectileMass = 2
+shootingCD = 5
+
+[node name="ProjectileShooter5" parent="." unique_id=1381801928 instance=ExtResource("4_k078d")]
+position = Vector2(411, -1579.0001)
+rotation = 3.167164
+shootingCD = 1
