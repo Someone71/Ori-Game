@@ -2,8 +2,8 @@ extends Camera2D
 @onready var player = %Player
 
 #size of the map in pixels
-const mapX = 2304
-const mapY = -1296
+const mapX = 1920
+const mapY = -2192
 
 #min and max values for the camera position
 var xMin = 576 / zoom.x
